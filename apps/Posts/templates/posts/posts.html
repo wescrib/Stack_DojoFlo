@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'faveicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <title>Home | Stack DojoFlow</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Stack DojoFlow</h1>
+            <a href="/create_post">Post Question</a> | <a href="/logout" class="logout">Logout</a>
+        </div>
+
+        <div class="navigation">
+            <h4><a href="/home">Home</a></h4>
+
+            {% for topic in topics %}
+                <p>{{ topic.name.title }}</p>
+                {% for subtopic in subtopics %}
+                    {% if subtopic.topic_id == topic.id %}
+                <ul>
+                    <li><a href="/question/{{ subtopic.id }}">{{ subtopic.name }}</a></li>
+                </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    
+        <div class="content">
+            <div id="allPosts">
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Summary</th>
+                    </tr>
+                {% for single_post in allPosts|slice:":10" %}
+                    <tr>
+                    <td>{{ single_post.subtopic.name }}</td>
+                    <td><a href="/info/{{single_post.id}}">{{single_post.title}}</a></td>
+                    </tr>
+                {% endfor %}
+            </div>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

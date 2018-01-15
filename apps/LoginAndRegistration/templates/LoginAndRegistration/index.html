@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login_app/style.css' %}" />
+    <link rel="shortcut icon" href="{% static 'login_app/images/faveicon.ico' %}">
+    <title>Login | Stack DojoFlow</title>
+</head>
+<body>
+    <div class="container">
+    <!-- <h1>QUOTES</h1> -->
+    <div class="forms">
+    <div class="registration">
+    <h1>Register</h1>
+        <form action="/register" method="post">
+            {% csrf_token %}
+            <p><input type="text" name="first" placeholder="First Name"></p>
+            <p><input type="text" name="last" placeholder="Last Name"></p>
+            <p><input type="text" name="username" placeholder="Username"></p>
+            <p><input type="text" name="email" placeholder="Email Address"></p>
+            <p>DOB &nbsp&nbsp<input type="date" class="dob" name="dob" placeholder="Date of Birth"></p>
+            <p><input type="password" name="password" placeholder="Password"></p>
+            <p><input type="password" name="confirm" placeholder="Confirm Password"></p>
+            <input type="submit" value="Register" class="btn">
+        </form>
+    </div>
+    <hr>
+    <div class="login">
+    <h1>Login</h1>
+    <img src="{% static 'login_app/images/Banana.ico' %}" alt="Banana Bob" width="35%">
+        <form action="/login" method="post">
+            {% csrf_token %}
+            <p><input type="text" name="email" placeholder="Email"></p>
+            <p><input type="password" name="password" placeholder="Password"></p>
+            <input type="submit" value="Login" class="btn">
+        </form>
+    </div>
+    </div>
+    <div class="errors">
+        {%if messages %}
+        <ul>
+            {% for message in messages%}
+            <li style="color: red;">{{message}}</li>
+            {%endfor%}
+        </ul>
+        {% endif %}
+    </div>
+    </div>
+</body>
+</html>

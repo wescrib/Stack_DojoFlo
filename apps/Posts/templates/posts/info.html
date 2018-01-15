@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'faveicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <title>Issue | Stack DojoFlow</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Stack DojoFlow</h1>
+            <a href="/create_post">Post Question</a> | <a href="/logout" class="logout">Logout</a>
+        </div>
+        <div class="navigation">
+            <h4><a href="/home">Home</a></h4>
+
+            {% for topic in topics %}
+                <p>{{ topic.name.title }}</p>
+                {% for subtopic in subtopics %}
+                    {% if subtopic.topic_id == topic.id %}
+                <ul>
+                    <li><a href="/question/{{ subtopic.id }}">{{ subtopic.name }}</a></li>
+                </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="content">
+            <p>Posted by <a href="/user_profile/{{post.user.id}}">{{post.user.username}}</a></p>
+            <h2>{{post.title}}</h2>
+            <p class="pre_area">{{post.content}}</p>
+            <!-- user id ={{post.user.id}} -->
+        <form action="/addComment/{{post.id}}" method="post">
+        {% csrf_token %}
+        <div class="comment_box">
+            <textarea name="content" placeholder="Leave a comment, or helpful piece of advice...inspirational Instagram quote...or do nothing" rows="10%" cols="80%"></textarea>
+            <input type="submit" class="btn" value="Submit">
+        </form>
+        </div>
+        <div class="comments">
+                {% for comment in comments %}
+                <div class="comment">
+                <p><a href="/user_profile/{{ comment.user.id }}">{{ comment.user.username }}</a> - {{comment.created_at}}</p>
+                <p class="pre_area">{{comment.content}}</p>
+                </div>
+                {% endfor %}
+        </div>
+        </div>
+    </div>
+</body>
+</html>
