@@ -164,6 +164,16 @@ span.created_at {
     width: 150px;
     margin-top: 30px;
 }
+
+.test {
+    margin-top: 50px;
+}
+
+.comment_signin {
+    background-color: white;
+    padding-bottom: 150px;
+}
+
 .comments {
     margin-bottom: 30px;
 }

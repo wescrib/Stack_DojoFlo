@@ -37,13 +37,23 @@
             <h2>{{post.title}}</h2>
             <p class="pre_area">{{post.content}}</p>
             <!-- user id ={{post.user.id}} -->
-        <form action="/addComment/{{post.id}}" method="post">
-        {% csrf_token %}
-        <div class="comment_box">
-            <textarea name="content" placeholder="Leave a comment, or helpful piece of advice...inspirational Instagram quote...or do nothing" rows="10%" cols="80%"></textarea>
-            <input type="submit" class="btn" value="Submit">
-        </form>
-        </div>
+
+            {{currentUser}}
+
+        <div class="test">
+            {% if currentUser == "null" %}
+                <p class="comment_signin">Want to comment? <a href="/">Sign in</a> and contribute!</p>
+            {% endif %}
+            {% if currentUser != "null" %}
+            <form action="/addComment/{{post.id}}" method="post">
+                {% csrf_token %}
+                <div class="comment_box">
+                    <textarea name="content" placeholder="Leave a comment, or helpful piece of advice...inspirational Instagram quote...or do nothing" rows="10%" cols="80%"></textarea>
+                    <input type="submit" class="btn" value="Submit">
+                </form>
+            {% endif %}
+                </div>
+            </div>
         <div class="comments">
                 {% for comment in comments %}
                 <div class="comment">

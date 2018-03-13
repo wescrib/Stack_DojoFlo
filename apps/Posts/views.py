@@ -9,8 +9,8 @@ from django.contrib import messages
 
 def home(request):
 #all the contents that will be on the homepage
-    if "user_id" not in request.session: 
-        return redirect("/")
+    # if "user_id" not in request.session: 
+    #     return redirect("/")
 
     context = {
         "subtopics" : SubTopic.objects.all(),
@@ -22,8 +22,8 @@ def home(request):
 
 def question(request, subtopic_id):
 
-    if "user_id" not in request.session: 
-        return redirect("/")
+    # if "user_id" not in request.session: 
+    #     return redirect("/")
 
     category = SubTopic.objects.get(id=subtopic_id)
 
@@ -69,11 +69,16 @@ def submit_post(request):
 
 def info(request, post_id):
 
-    if "user_id" not in request.session: 
-        return redirect("/")
+    # if "user_id" not in request.session: 
+    #     return redirect("/")
 
     comments = Comment.objects.filter(post_id=post_id).order_by("-created_at")
     user = User.objects.all()
+    if "user_id" not in request.session:
+        currentUser = "null"
+    else:
+        currentUser = User.objects.get(id=request.session['user_id'])
+
 
     context = {
         "post" : Post.objects.get(id=post_id),
@@ -81,6 +86,7 @@ def info(request, post_id):
         "comments" : comments,
         "subtopics" : SubTopic.objects.all(),
         "topics" : Topic.objects.all(),
+        "currentUser" : currentUser
 
         }
 
